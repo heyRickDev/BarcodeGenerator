@@ -1,0 +1,181 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.container {
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.import-section {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.file-input {
+  display: none;
+}
+
+.import-button,
+.generate-button,
+.clear-button,
+.print-button {
+  display: inline-block;
+  padding: 12px 24px;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.import-button {
+  background: #007bff;
+}
+
+.import-button:hover {
+  background: #0056b3;
+}
+
+.generate-button {
+  background: #28a745;
+}
+
+.generate-button:hover {
+  background: #1e7e34;
+}
+
+.clear-button {
+  background: #6c757d;
+}
+
+.clear-button:hover {
+  background: #545b62;
+}
+.print-button {
+  background: #d58632;
+}
+
+.print-button:hover {
+  background: #cd771b;
+}
+
+.products-count {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.barcodes-section {
+  margin-top: 20px;
+}
+
+.barcodes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.barcode-card {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  /* max-width: 400px; */
+}
+
+.barcode-card h2{
+  font-size: 12px;
+  margin: 0;
+  font-weight: 400;
+}
+
+.barcode {
+  display: block;
+  margin: 0 auto;
+}
+
+/* .barcode-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 15px;
+  text-align: left;
+}
+
+.barcode-info strong {
+  font-size: 16px;
+  color: #333;
+}
+
+.barcode-info span {
+  font-size: 14px;
+  color: #666;
+} */
+
+.barcode-card p{
+  font-size: 26px;
+  font-weight: bolder;
+}
+
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  header {
+    display: none;
+  }
+
+  .barcodes-section {
+    display: flex;
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0;
+    /* padding: 10mm; */
+}
+
+  .barcodes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* gap: 10mm; */
+    margin: 0 auto;
+    align-items: center;
+  }
+
+  .barcode-card {
+    display: block;
+    padding: 0;
+    width: 70mm;
+    /* height: 15mm; */
+    box-shadow: none;
+    border-radius: 0;
+    background: white;
+    border: 1px solid red;
+  }
+
+  .barcode-card strong {
+    display: block;
+  }
+}
