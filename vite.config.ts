@@ -1,7 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { copyFileSync } from 'fs'
 
-// https://vite.dev/config/
+function noJekyll() {
+  return {
+    name: 'nojekyll',
+    closeBundle() {
+      copyFileSync('.nojekyll', 'dist/.nojekyll')
+    }
+  }
+}
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), noJekyll()],
+  base: '/BarcodeGenerator/',
 })
