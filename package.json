@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://heyrickdev.github.io/BarcodeGenerator/",
+  "homepage": "https://heyRickDev.github.io/BarcodeGenerator/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
