@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Barcode } from './components/Barcode'
+import { Price } from './components/Price'
 import './index.css'
 
 export interface Product {
@@ -85,11 +86,7 @@ function App() {
               <div key={index} className="barcode-card">
                 <h2>{product.ProductName}</h2>
                 <Barcode value={product.Code} />
-                {/* <div className="barcode-info">
-                  <span>Code: {product.Code}</span>
-                  <span>Price: ${product.Price.toFixed(2)}</span>
-                  <span>Qty: {product.quantity}</span>
-                </div> */}
+                {/* <Price price={product.Price} /> */}
               </div>
             ))}
           </div>

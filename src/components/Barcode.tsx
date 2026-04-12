@@ -14,7 +14,7 @@ export function Barcode({ value }: BarcodeProps) {
         format: 'CODE128',
         displayValue: true,
         fontSize: 8,
-        margin: 10,
+        margin: 2,
         width: 2,
         height: 20
       })
