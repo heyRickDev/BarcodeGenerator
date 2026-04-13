@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Barcode } from './components/Barcode'
-import { Price } from './components/Price'
 import './index.css'
 
 export interface Product {
@@ -81,15 +80,18 @@ function App() {
 
       {showBarcodes && (
         <div className="barcodes-section">
-          <div className="barcodes-grid">
-            {products.map((product, index) => (
-              <div key={index} className="barcode-card">
-                <h2>{product.ProductName}</h2>
-                <Barcode value={product.Code} />
-                {/* <Price price={product.Price} /> */}
+          {Array.from({ length: Math.ceil(products.length / 80) }).map((_, pageIndex) => (
+            <div key={pageIndex} className="print-page">
+              <div className="barcodes-grid">
+                {products.slice(pageIndex * 80, (pageIndex + 1) * 80).map((product, index) => (
+                  <div key={`${pageIndex}-${index}`} className="barcode-card">
+                    <h2>{product.ProductName}</h2>
+                    <Barcode value={product.Code} />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       )}
     </div>

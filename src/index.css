@@ -103,6 +103,13 @@ h1 {
   width: 100%;
   /* max-width: 400px; */
 }
+.print-page {
+  page-break-after: always;
+}
+
+.print-page:last-child {
+  page-break-after: auto;
+}
 
 .barcode-card h2{
   font-size: 12px;
@@ -150,30 +157,34 @@ h1 {
   }
 
   .barcodes-section {
-    display: flex;
+    width: 210mm;
+    margin: 0;
+    padding: 0; 
+  }
+
+  .print-page {
     width: 210mm;
     min-height: 297mm;
-    margin: 10mm 0;
-    /* padding: 10mm; */
-}
+    margin: 12mm 10mm;
+    /* padding: 10mm 0; */
+    box-sizing: border-box;
+  }
 
   .barcodes-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    /* gap: 10mm; */
-    margin: 0 auto;
+    /* margin: 0 auto; */
     align-items: center;
+    row-gap: .15cm;
   }
 
   .barcode-card {
     display: block;
     padding: 0;
     width: 46mm;
-    /* height: 15mm; */
     box-shadow: none;
     border-radius: 0;
     background: white;
-    border: 1px solid red;
   }
 
   .barcode-card strong {
