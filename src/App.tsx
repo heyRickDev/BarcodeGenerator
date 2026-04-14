@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Barcode } from './components/Barcode'
 import './index.css'
+import Price from './components/Price'
 
 export interface Product {
   Code: string
@@ -12,6 +13,7 @@ export interface Product {
 function App() {
   const [products, setProducts] = useState<Product[]>([])
   const [showBarcodes, setShowBarcodes] = useState(false)
+  const [showPriceTags, setShowPriceTags] = useState(false)
 
   const handleFileImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -27,6 +29,7 @@ function App() {
         const jsonData = XLSX.utils.sheet_to_json<Product>(worksheet)
         setProducts(jsonData)
         setShowBarcodes(false)
+        setShowPriceTags(false)
       }
       reader.readAsArrayBuffer(file)
     })
@@ -34,11 +37,17 @@ function App() {
 
   const generateBarcodes = () => {
     setShowBarcodes(true)
+    setShowPriceTags(false)
+  }
+  const generatePriceTags = () => {
+    setShowPriceTags(true)
+    setShowBarcodes(false)
   }
 
   const handleClear = () => {
     setProducts([])
     setShowBarcodes(false)
+    setShowPriceTags(false)
   }
 
   return (
@@ -59,8 +68,8 @@ function App() {
           
           {products.length > 0 && (
             <>
-              <button onClick={generateBarcodes} className="generate-button">
-                Generate Barcodes
+              <button onClick={showPriceTags ? generateBarcodes : generatePriceTags} className="generate-button">
+                Generate {showPriceTags ? 'Barcodes' : 'Pricetag'}
               </button>
               <button onClick={handleClear} className="clear-button">
                 Clear
@@ -81,12 +90,29 @@ function App() {
       {showBarcodes && (
         <div className="barcodes-section">
           {Array.from({ length: Math.ceil(products.length / 80) }).map((_, pageIndex) => (
-            <div key={pageIndex} className="print-page">
+            <div key={pageIndex} className="print-page-barcode">
               <div className="barcodes-grid">
                 {products.slice(pageIndex * 80, (pageIndex + 1) * 80).map((product, index) => (
                   <div key={`${pageIndex}-${index}`} className="barcode-card">
-                    <h2>{product.ProductName}</h2>
+                    <h2>{product.ProductName.slice(0, 25)}</h2>
                     <Barcode value={product.Code} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {showPriceTags && (
+        <div className="barcodes-section">
+          {Array.from({ length: Math.ceil(products.length / 21) }).map((_, pageIndex) => (
+            <div key={pageIndex} className="print-page-pricetag">
+              <div className="pricetags-grid">
+                {products.slice(pageIndex * 21, (pageIndex + 1) * 21).map((product, index) => (
+                  <div key={`${pageIndex}-${index}`} className="pricetag-card">
+                    <h2>{product.ProductName.slice(0, 25)}</h2>
+                    <Price price={product.Price}/>
                   </div>
                 ))}
               </div>

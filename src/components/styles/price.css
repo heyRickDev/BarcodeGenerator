@@ -1,0 +1,15 @@
+.price-tag {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: baseline;
+    padding-bottom: 10px;
+}
+
+.price-value {
+    font-weight: bold;
+    font-size: 50px;
+}
+.price-unit {
+    font-weight: bold;
+}
