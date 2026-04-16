@@ -95,7 +95,7 @@ h1 {
 }
 .pricetags-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
 }
 
@@ -107,11 +107,11 @@ h1 {
   width: 100%;
 }
 
-.print-page {
+.print-page-barcode, .print-page-pricetag {
   page-break-after: always;
 }
 
-.print-page:last-child {
+.print-page-barcode:last-child, .print-page-pricetag:last-child {
   page-break-after: auto;
 }
 
@@ -124,11 +124,6 @@ h1 {
 .barcode {
   display: block;
   margin: 0 auto;
-}
-
-.barcode-card p {
-  font-size: 26px;
-  font-weight: bolder;
 }
 
 @media print {
@@ -155,9 +150,9 @@ h1 {
     box-sizing: border-box;
   }
   .print-page-pricetag {
-    width: 210mm;
-    min-height: 297mm;
-    /* margin: 12mm 10mm; */
+    width: 297mm;
+    min-height: 210mm;
+    margin: 10mm;
     box-sizing: border-box;
   }
 
@@ -171,8 +166,7 @@ h1 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    /* justify-content: space-between; */
-    /* row-gap: 3cm; */
+    row-gap: 3cm;
   }
 
   .barcode-card {
@@ -187,13 +181,17 @@ h1 {
     display: block;
     padding: 0;
     width: 80mm;
+    /* height: 60mm; */
     box-shadow: none;
-    border-radius: 8px;
     background: white;
-    border: 2px solid gray;
+    overflow: hidden;
   }
 
   .barcode-card h2 {
     font-size: 11px;
+  }
+
+  .pricetag-card h2 {
+    font-size: 20px;
   }
 }

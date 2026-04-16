@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react'
 import JsBarcode from 'jsbarcode'
 
 interface BarcodeProps {
-  value: string
+  value: number
 }
 
 export function Barcode({ value }: BarcodeProps) {
