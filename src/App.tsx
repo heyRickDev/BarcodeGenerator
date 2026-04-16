@@ -1,14 +1,10 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Barcode } from './components/Barcode'
 import './index.css'
 import Price from './components/Price'
 
 export interface Product {
-  // Code: string
-  // Price: number
-  // ProductName: string
-  // quantity: number
-  Código: number
+  Código: string
   Descrição: string 
   PreçodeVenda: number
   Estoque: number
@@ -18,7 +14,6 @@ function App() {
   const [products, setProducts] = useState<Product[]>([])
   const [showBarcodes, setShowBarcodes] = useState(false)
   const [showPriceTags, setShowPriceTags] = useState(false)
-  console.log(products)
 
   const handleFileImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -54,6 +49,29 @@ function App() {
     setShowBarcodes(false)
     setShowPriceTags(false)
   }
+
+  const barcodePages = useMemo(() => {
+    const allCards: { product: Product }[] = []
+    products.forEach((product) => {
+      for (let i = 0; i < product.Estoque; i++) {
+        allCards.push({ product })
+      }
+    })
+    
+    const pageCount = Math.ceil(allCards.length / 80)
+    return Array.from({ length: pageCount }).map((_, pageIndex) => ({
+      cards: allCards.slice(pageIndex * 80, (pageIndex + 1) * 80),
+      pageIndex
+    }))
+  }, [products])
+
+  const pricetagPages = useMemo(() => {
+    const pageCount = Math.ceil(products.length / 9)
+    return Array.from({ length: pageCount }).map((_, pageIndex) => ({
+      products: products.slice(pageIndex * 9, (pageIndex + 1) * 9),
+      pageIndex
+    }))
+  }, [products])
 
   return (
     <div className="container">
@@ -94,17 +112,15 @@ function App() {
 
       {showBarcodes && (
         <div className="barcodes-section">
-          {Array.from({ length: Math.ceil(products.length / 80) }).map((_, pageIndex) => (
+          {barcodePages.map(({ cards, pageIndex }) => (
             <div key={pageIndex} className="print-page-barcode">
               <div className="barcodes-grid">
-                {products.slice(pageIndex * 80, (pageIndex + 1) * 80).flatMap((product, index) =>
-                Array.from({ length: product.Estoque }, (_, i) => (
-                  <div key={`${pageIndex}-${index}-${i}`} className="barcode-card">
+                {cards.map(({ product }, index) => (
+                  <div key={`${pageIndex}-${index}`} className="barcode-card">
                     <h2>{product.Descrição.slice(0, 25)}</h2>
                     <Barcode value={product.Código} />
-                 </div>
-                 ))
-              )}
+                  </div>
+                ))}
               </div>
             </div>
           ))}
@@ -113,10 +129,10 @@ function App() {
 
       {showPriceTags && (
         <div className="barcodes-section">
-          {Array.from({ length: Math.ceil(products.length / 9) }).map((_, pageIndex) => (
+          {pricetagPages.map(({ products: pageProducts, pageIndex }) => (
             <div key={pageIndex} className="print-page-pricetag">
               <div className="pricetags-grid">
-                {products.slice(pageIndex * 9, (pageIndex + 1) * 9).map((product, index) => (
+                {pageProducts.map((product, index) => (
                   <div key={`${pageIndex}-${index}`} className="pricetag-card">
                     <h2>{product.Descrição.slice(0, 33)}</h2>
                     <Price price={product.PreçodeVenda}/>

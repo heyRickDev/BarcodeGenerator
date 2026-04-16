@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react'
 import JsBarcode from 'jsbarcode'
 
 interface BarcodeProps {
-  value: number
+  value: string
 }
 
 export function Barcode({ value }: BarcodeProps) {
@@ -20,7 +20,6 @@ export function Barcode({ value }: BarcodeProps) {
       })
     }
   }, [value])
-  console.log(value)
   
   return <svg ref={svgRef} className="barcode" />
 }
