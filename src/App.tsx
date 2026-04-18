@@ -8,12 +8,14 @@ export interface Product {
   Descrição: string 
   PreçodeVenda: number
   Estoque: number
+  // __rowNum__: number
 }
 
 function App() {
   const [products, setProducts] = useState<Product[]>([])
   const [showBarcodes, setShowBarcodes] = useState(false)
   const [showPriceTags, setShowPriceTags] = useState(false)
+  console.log(products)
 
   const handleFileImport = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -34,6 +36,16 @@ function App() {
       reader.readAsArrayBuffer(file)
     })
   }
+      //   const flatProducts = useMemo(() =>
+      //   products.flatMap((product) =>
+      //     Array.from({ length: product.Estoque }, (_, i) => ({
+      //       ...product,
+      //       key: `${product.Código}-${product.__rowNum__}-${i}`
+      //     }))
+      //   ),
+      //   [products]
+      // );
+      //   console.log('Flattened: ', flatProducts)
 
   const generateBarcodes = () => {
     setShowBarcodes(true)
